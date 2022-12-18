@@ -267,6 +267,26 @@ extension AlignmentExtension on BuildContext {
   WrapCrossAlignment get wrapCrossAStart => WrapCrossAlignment.start;
   WrapCrossAlignment get wrapCrossACenter => WrapCrossAlignment.center;
   WrapCrossAlignment get wrapCrossAEnd => WrapCrossAlignment.end;
+
+  // Fabbutton
+  FloatingActionButtonLocation get fabCenterDocked => FloatingActionButtonLocation.centerDocked;
+  FloatingActionButtonLocation get fabCenterFloat => FloatingActionButtonLocation.centerFloat;
+  FloatingActionButtonLocation get fabCenterTop => FloatingActionButtonLocation.centerTop;
+  FloatingActionButtonLocation get fabEndDocked => FloatingActionButtonLocation.endDocked;
+  FloatingActionButtonLocation get fabEndFloat => FloatingActionButtonLocation.endFloat;
+  FloatingActionButtonLocation get fabEndTop => FloatingActionButtonLocation.endTop;
+  FloatingActionButtonLocation get fabMiniCenterDocked => FloatingActionButtonLocation.miniCenterDocked;
+  FloatingActionButtonLocation get fabMiniCenterFloat => FloatingActionButtonLocation.miniCenterFloat;
+  FloatingActionButtonLocation get fabMiniCenterTop => FloatingActionButtonLocation.miniCenterTop;
+  FloatingActionButtonLocation get fabMiniEndDocked => FloatingActionButtonLocation.miniEndDocked;
+  FloatingActionButtonLocation get fabMiniEndFloat => FloatingActionButtonLocation.miniEndFloat;
+  FloatingActionButtonLocation get fabMiniEndTop => FloatingActionButtonLocation.miniEndTop;
+  FloatingActionButtonLocation get fabMiniStartDocked => FloatingActionButtonLocation.miniStartDocked;
+  FloatingActionButtonLocation get fabMiniStartFloat => FloatingActionButtonLocation.miniStartFloat;
+  FloatingActionButtonLocation get fabMiniStartTop => FloatingActionButtonLocation.miniStartTop;
+  FloatingActionButtonLocation get fabStartDocked => FloatingActionButtonLocation.startDocked;
+  FloatingActionButtonLocation get fabStartFloat => FloatingActionButtonLocation.startFloat;
+  FloatingActionButtonLocation get fabStartTop => FloatingActionButtonLocation.startTop;
 }
 
 extension TextInputTypeExtension on BuildContext {
@@ -281,6 +301,15 @@ extension TextInputTypeExtension on BuildContext {
   TextInputType get keyboardText => TextInputType.text;
   TextInputType get keyboardUrl => TextInputType.url;
   TextInputType get keyboardVisiblePassword => TextInputType.visiblePassword;
+}
+
+// Physics
+extension PhysicsExtension on BuildContext {
+  ScrollPhysics get neverScroll => const NeverScrollableScrollPhysics();
+  ScrollPhysics get bouncingScroll => const BouncingScrollPhysics();
+  ScrollPhysics get clampingScroll => const ClampingScrollPhysics();
+  ScrollPhysics get fixedExtentScroll => const FixedExtentScrollPhysics();
+  ScrollPhysics get alwaysScrollableScroll => const AlwaysScrollableScrollPhysics();
 }
 
 // Sized Boxes
