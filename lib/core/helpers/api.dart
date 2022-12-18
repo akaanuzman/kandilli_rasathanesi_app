@@ -9,7 +9,7 @@ import '../utils/navigation_service.dart';
 import 'token.dart';
 
 class Api extends BaseSingleton {
-  String baseUrl = "http://localhost:3030/api";
+  String baseUrl = "https://api.orhanaydogdu.com.tr/deprem";
   var dio = Dio();
   String? token;
   BuildContext currentContext = NavigationService.navigatorKey.currentContext!;

@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
 import 'package:kandilli_rasathanesi_app/products/views/home_view.dart';
+import 'package:provider/provider.dart';
+
+import 'core/constants/app_constants.dart';
 
 // TODO: Learn dart export
 
-void main() => runApp(
-      const MyApp(),
-    );
+void main() {
+  AppConstants constants = AppConstants.instance;
+
+  runApp(
+    MultiProvider(
+      providers: constants.providers,
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget with BaseSingleton {
   const MyApp({super.key});
@@ -20,7 +30,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
       localizationsDelegates: constants.localizationsDelegates,
       supportedLocales: constants.supportedLocales,
       navigatorKey: constants.navigatorKey,
-      home: const HomeView(),
+      home: HomeView(),
     );
   }
 }

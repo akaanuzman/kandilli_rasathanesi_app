@@ -4,24 +4,45 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
 import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
 import 'package:kandilli_rasathanesi_app/uikit/decoration/special_container_decoration.dart';
+import 'package:kandilli_rasathanesi_app/uikit/skeleton/skeleton_list.dart';
 import 'package:kandilli_rasathanesi_app/uikit/textformfield/default_text_form_field.dart';
+import 'package:provider/provider.dart';
+
+import '../models/earthquake_model.dart';
+import '../viewmodels/earthquakes_view_model.dart';
 
 class HomeView extends StatelessWidget with BaseSingleton {
-  const HomeView({super.key});
+  final _earthquakeController = TextEditingController();
+  HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final pv = Provider.of<EarthquakesViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: _appBarTitle(context),
       ),
       body: FadeInRight(
-        child: ListView(
-          children: [
-            _searchEarthquakeField(context),
-            context.emptySizedHeightBox2x,
-            _earthquakeList(context),
-          ],
+        child: FutureBuilder(
+          future: pv.getLatestEarthquakes(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return SkeletonList();
+              default:
+                return Consumer<EarthquakesViewModel>(
+                  builder: (context, pv, _) {
+                    return ListView(
+                      children: [
+                        _searchEarthquakeField(context, pv),
+                        context.emptySizedHeightBox2x,
+                        _earthquakeList(context, pv),
+                      ],
+                    );
+                  },
+                );
+            }
+          },
         ),
       ),
     );
@@ -33,20 +54,26 @@ class HomeView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  Padding _searchEarthquakeField(BuildContext context) {
+  Padding _searchEarthquakeField(
+      BuildContext context, EarthquakesViewModel pv) {
     return Padding(
       padding: context.padding2x,
       child: DefaultTextFormField(
         context: context,
         labelText: AppLocalizations.of(context)!.searchEarthQuake,
         prefixIcon: icons.search,
+        onChanged: pv.searchEarthquake,
+        controller: _earthquakeController,
       ),
     );
   }
 
-  ListView _earthquakeList(BuildContext context) {
+  Widget _earthquakeList(BuildContext context, EarthquakesViewModel pv) {
     bool shrinkWrap = true;
-    int itemCount = 10;
+    int itemCount = pv.eartquakes.length;
+    if (_earthquakeController.text.isNotEmpty) {
+      itemCount = pv.searchList.length;
+    }
     return ListView.separated(
       shrinkWrap: shrinkWrap,
       physics: context.neverScroll,
@@ -55,38 +82,53 @@ class HomeView extends StatelessWidget with BaseSingleton {
         return context.emptySizedHeightBox3x;
       },
       itemBuilder: (BuildContext context, int index) {
-        return _item(context);
+        EarthquakeModel eartquake = pv.eartquakes[index];
+        if (_earthquakeController.text.isNotEmpty) {
+          eartquake = pv.searchList[index];
+        }
+        return _eartquakeInfo(context, eartquake);
       },
     );
   }
 
-  Container _item(BuildContext context) {
+  Container _eartquakeInfo(
+    BuildContext context,
+    EarthquakeModel eartquake,
+  ) {
+    String location = "${eartquake.lokasyon}";
+    String date = "${eartquake.date}";
+    double mag = eartquake.mag == null ? 0 : eartquake.mag!.toDouble();
     return Container(
       padding: context.padding2x,
       decoration: SpecialContainerDecoration(context: context),
       child: ListTile(
-        leading: _circleAvatarInsideIcon(context),
+        leading: _circleAvatarInsideIcon(context, mag),
         title: _subtitle1BoldText(
           context: context,
-          data: "H. HUSEYINYAYLASI-BIGA (CANAKKALE)",
+          data: location,
         ),
         subtitle: Text(
-          "2022.12.18 23:43:58",
+          date,
           style: context.textTheme.subtitle2,
         ),
         trailing: _subtitle1BoldText(
           context: context,
-          data: "4.4",
+          data: "$mag",
         ),
       ),
     );
   }
 
-  CircleAvatar _circleAvatarInsideIcon(BuildContext context) {
+  CircleAvatar _circleAvatarInsideIcon(BuildContext context, double mag) {
+    Color bgColor = mag > 3.0
+        ? colors.redAccent4
+        : mag > 2.0
+            ? colors.amberAccent4
+            : colors.greenAccent4;
     return CircleAvatar(
       minRadius: 25,
       maxRadius: 30,
-      backgroundColor: colors.redAccent4,
+      backgroundColor: bgColor,
       child: _warningIcon(context),
     );
   }
