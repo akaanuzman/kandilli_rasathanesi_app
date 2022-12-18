@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
 import 'package:kandilli_rasathanesi_app/products/views/home_view.dart';
 
+// TODO: Learn dart export
+
 void main() => runApp(
       const MyApp(),
     );
