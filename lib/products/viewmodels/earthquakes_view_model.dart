@@ -7,8 +7,8 @@ import 'package:kandilli_rasathanesi_app/core/helpers/api.dart';
 import 'package:kandilli_rasathanesi_app/products/models/earthquake_model.dart';
 
 class EarthquakesViewModel extends ChangeNotifier {
-  List<EarthquakeModel> _eartquakes = [];
-  List<EarthquakeModel> get eartquakes => _eartquakes;
+  List<EarthquakeModel> _earthquakes = [];
+  List<EarthquakeModel> get earthquakes => _earthquakes;
   List<EarthquakeModel> _searchList = [];
   List<EarthquakeModel> get searchList => _searchList;
   final _api = Api();
@@ -25,19 +25,19 @@ class EarthquakesViewModel extends ChangeNotifier {
         Iterable listBest = result?.data["result"];
         datasBest =
             listBest.map((model) => EarthquakeModel.fromJson(model)).toList();
-        _eartquakes = datasBest;
+        _earthquakes = datasBest;
       } catch (e) {
         print(e);
       }
     } else {
-      _eartquakes = [];
+      _earthquakes = [];
     }
     notifyListeners();
   }
 
   void searchEarthquake(String query) {
     if (query.isNotEmpty) {
-      final suggestions = eartquakes.where((earthquake) {
+      final suggestions = earthquakes.where((earthquake) {
         final location = earthquake.lokasyon?.toLowerCase();
         final input = query.toLowerCase();
         return location?.contains(input) ?? false;

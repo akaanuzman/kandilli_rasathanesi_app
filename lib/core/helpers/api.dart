@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../base/base_singleton.dart';
 import '../utils/navigation_service.dart';
-import 'token.dart';
 
 class Api extends BaseSingleton {
   String baseUrl = "https://api.orhanaydogdu.com.tr/deprem";
@@ -20,18 +19,6 @@ class Api extends BaseSingleton {
     return q;
   }
 
-  setHeaderWithToken() async {
-    final tkn = await Token.readToken('login');
-    if (tkn != null) {
-      token = tkn;
-    }
-    Map<String, String> q = {
-      HttpHeaders.contentTypeHeader: 'application/json',
-      HttpHeaders.authorizationHeader: 'Bearer ${token ?? ''}',
-    };
-    return q;
-  }
-
   Future<Response?> dioPost(
       {required String url,
       String? fullUrl,
@@ -40,11 +27,7 @@ class Api extends BaseSingleton {
       bool post = true}) async {
     Map<String, String> headers;
     print("dio post: $baseUrl$url");
-    if (useToken) {
-      headers = await setHeaderWithToken();
-    } else {
-      headers = setHeaderWithOutToken();
-    }
+    headers = setHeaderWithOutToken();
     print(obj);
     try {
       Response response;
@@ -79,11 +62,7 @@ class Api extends BaseSingleton {
   }) async {
     print("dio get: $url");
     Map<String, String> headers;
-    if (useToken) {
-      headers = await setHeaderWithToken();
-    } else {
-      headers = setHeaderWithOutToken();
-    }
+    headers = setHeaderWithOutToken();
     try {
       Response response;
       if (get) {
@@ -108,11 +87,7 @@ class Api extends BaseSingleton {
     bool useToken = true,
   }) async {
     Map<String, String> headers;
-    if (useToken) {
-      headers = await setHeaderWithToken();
-    } else {
-      headers = setHeaderWithOutToken();
-    }
+    headers = setHeaderWithOutToken();
     try {
       Response response = await Dio()
           .post(baseUrl + url, data: obj, options: Options(headers: headers));
