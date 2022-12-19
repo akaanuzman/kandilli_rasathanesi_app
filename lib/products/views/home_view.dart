@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
 import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
+import 'package:kandilli_rasathanesi_app/products/views/map_view.dart';
 import 'package:kandilli_rasathanesi_app/uikit/decoration/special_container_decoration.dart';
 import 'package:kandilli_rasathanesi_app/uikit/skeleton/skeleton_list.dart';
 import 'package:kandilli_rasathanesi_app/uikit/textformfield/default_text_form_field.dart';
@@ -15,6 +16,16 @@ class HomeView extends StatelessWidget with BaseSingleton {
   final _earthquakeController = TextEditingController();
   HomeView({super.key});
 
+  _goToMapPage(BuildContext context, EarthquakeModel earthquake) =>
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EarthquakeMapView(
+            model: earthquake,
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final pv = Provider.of<EarthquakesViewModel>(context, listen: false);
@@ -23,28 +34,32 @@ class HomeView extends StatelessWidget with BaseSingleton {
         title: _appBarTitle(context),
       ),
       body: FadeInRight(
-        child: FutureBuilder(
-          future: pv.getLatestEarthquakes(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return SkeletonList();
-              default:
-                return Consumer<EarthquakesViewModel>(
-                  builder: (context, pv, _) {
-                    return ListView(
-                      children: [
-                        _searchEarthquakeField(context, pv),
-                        context.emptySizedHeightBox2x,
-                        _earthquakeList(context, pv),
-                      ],
-                    );
-                  },
-                );
-            }
-          },
-        ),
+        child: _initPage(pv),
       ),
+    );
+  }
+
+  FutureBuilder<void> _initPage(EarthquakesViewModel pv) {
+    return FutureBuilder(
+      future: pv.getLatestEarthquakes(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return SkeletonList();
+          default:
+            return Consumer<EarthquakesViewModel>(
+              builder: (context, pv, _) {
+                return ListView(
+                  children: [
+                    _searchEarthquakeField(context, pv),
+                    context.emptySizedHeightBox2x,
+                    _earthquakeList(context, pv),
+                  ],
+                );
+              },
+            );
+        }
+      },
     );
   }
 
@@ -70,7 +85,7 @@ class HomeView extends StatelessWidget with BaseSingleton {
 
   Widget _earthquakeList(BuildContext context, EarthquakesViewModel pv) {
     bool shrinkWrap = true;
-    int itemCount = pv.eartquakes.length;
+    int itemCount = pv.earthquakes.length;
     if (_earthquakeController.text.isNotEmpty) {
       itemCount = pv.searchList.length;
     }
@@ -82,26 +97,27 @@ class HomeView extends StatelessWidget with BaseSingleton {
         return context.emptySizedHeightBox3x;
       },
       itemBuilder: (BuildContext context, int index) {
-        EarthquakeModel eartquake = pv.eartquakes[index];
+        EarthquakeModel earthquake = pv.earthquakes[index];
         if (_earthquakeController.text.isNotEmpty) {
-          eartquake = pv.searchList[index];
+          earthquake = pv.searchList[index];
         }
-        return _eartquakeInfo(context, eartquake);
+        return _eartquakeInfo(context, earthquake);
       },
     );
   }
 
   Container _eartquakeInfo(
     BuildContext context,
-    EarthquakeModel eartquake,
+    EarthquakeModel earthquake,
   ) {
-    String location = "${eartquake.lokasyon}";
-    String date = "${eartquake.date}";
-    double mag = eartquake.mag == null ? 0 : eartquake.mag!.toDouble();
+    String location = "${earthquake.lokasyon}";
+    String date = "${earthquake.date}";
+    double mag = earthquake.mag == null ? 0 : earthquake.mag!.toDouble();
     return Container(
       padding: context.padding2x,
       decoration: SpecialContainerDecoration(context: context),
       child: ListTile(
+        onTap: () => _goToMapPage(context, earthquake),
         leading: _circleAvatarInsideIcon(context, mag),
         title: _subtitle1BoldText(
           context: context,
@@ -120,11 +136,13 @@ class HomeView extends StatelessWidget with BaseSingleton {
   }
 
   CircleAvatar _circleAvatarInsideIcon(BuildContext context, double mag) {
-    Color bgColor = mag > 3.0
+    Color bgColor = mag > 4.0
         ? colors.redAccent4
-        : mag > 2.0
-            ? colors.amberAccent4
-            : colors.greenAccent4;
+        : mag > 3.0
+            ? colors.orangeAccent4
+            : mag > 2.0
+                ? colors.amberAccent4
+                : colors.greenAccent4;
     return CircleAvatar(
       minRadius: 25,
       maxRadius: 30,

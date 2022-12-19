@@ -16,9 +16,6 @@ dependencies:
   animate_do: ^3.0.2
   shimmer_animation: ^2.1.0+1
 
-  # Local Storage
-  flutter_secure_storage: ^6.1.0
-
   # State Management
   provider: ^6.0.4
 
@@ -31,6 +28,9 @@ dependencies:
 
   # Format
   intl: ^0.17.0
+
+  # Google Maps
+  google_maps_flutter: ^2.2.2
 
 dev_dependencies:
   flutter_test:
