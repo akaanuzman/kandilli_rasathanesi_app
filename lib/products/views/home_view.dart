@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
 import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
 import 'package:kandilli_rasathanesi_app/products/views/map_view.dart';
+import 'package:kandilli_rasathanesi_app/uikit/button/special_button.dart';
 import 'package:kandilli_rasathanesi_app/uikit/decoration/special_container_decoration.dart';
-import 'package:kandilli_rasathanesi_app/uikit/skeleton/skeleton_list.dart';
 import 'package:kandilli_rasathanesi_app/uikit/textformfield/default_text_form_field.dart';
 import 'package:provider/provider.dart';
 
@@ -28,38 +28,38 @@ class HomeView extends StatelessWidget with BaseSingleton {
 
   @override
   Widget build(BuildContext context) {
-    final pv = Provider.of<EarthquakesViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: _appBarTitle(context),
       ),
       body: FadeInRight(
-        child: _initPage(pv),
-      ),
-    );
-  }
-
-  FutureBuilder<void> _initPage(EarthquakesViewModel pv) {
-    return FutureBuilder(
-      future: pv.getLatestEarthquakes(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return SkeletonList();
-          default:
-            return Consumer<EarthquakesViewModel>(
-              builder: (context, pv, _) {
-                return ListView(
-                  children: [
-                    _searchEarthquakeField(context, pv),
-                    context.emptySizedHeightBox2x,
-                    _earthquakeList(context, pv),
-                  ],
-                );
-              },
+        child: Consumer<EarthquakesViewModel>(
+          builder: (context, pv, _) {
+            return ListView(
+              children: [
+                context.emptySizedHeightBox3x,
+                _searchEarthquakeField(context, pv),
+                context.emptySizedHeightBox3x,
+                Padding(
+                  padding: context.paddingHorizontal2x,
+                  child: SpecialButton(
+                    padding: context.padding2x,
+                    borderRadius: context.borderRadius4x,
+                    buttonLabel: AppLocalizations.of(context)!.sortByDate,
+                    isHasIcon: true,
+                    icon: Icons.date_range_rounded,
+                    onTap: () {
+                      pv.sortByDate;
+                    },
+                  ),
+                ),
+                context.emptySizedHeightBox3x,
+                _earthquakeList(context, pv),
+              ],
             );
-        }
-      },
+          },
+        ),
+      ),
     );
   }
 
@@ -72,7 +72,7 @@ class HomeView extends StatelessWidget with BaseSingleton {
   Padding _searchEarthquakeField(
       BuildContext context, EarthquakesViewModel pv) {
     return Padding(
-      padding: context.padding2x,
+      padding: context.paddingHorizontal2x,
       child: DefaultTextFormField(
         context: context,
         labelText: AppLocalizations.of(context)!.searchEarthQuake,
