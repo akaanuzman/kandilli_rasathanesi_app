@@ -38,27 +38,30 @@ class HomeView extends StatelessWidget with BaseSingleton {
             return ListView(
               children: [
                 context.emptySizedHeightBox3x,
+                _earthquakeInfo(context),
+                context.emptySizedHeightBox3x,
                 _searchEarthquakeField(context, pv),
                 context.emptySizedHeightBox3x,
-                Padding(
-                  padding: context.paddingHorizontal2x,
-                  child: SpecialButton(
-                    padding: context.padding2x,
-                    borderRadius: context.borderRadius4x,
-                    buttonLabel: AppLocalizations.of(context)!.sortByDate,
-                    isHasIcon: true,
-                    icon: Icons.date_range_rounded,
-                    onTap: () {
-                      pv.sortByDate;
-                    },
-                  ),
-                ),
+                _sortByDateButton(context, pv),
                 context.emptySizedHeightBox3x,
                 _earthquakeList(context, pv),
               ],
             );
           },
         ),
+      ),
+    );
+  }
+
+  Container _earthquakeInfo(BuildContext context) {
+    return Container(
+      decoration: SpecialContainerDecoration(context: context),
+      padding: context.padding2x,
+      margin: context.paddingHorizontal2x,
+      child: Text(
+        AppLocalizations.of(context)!.earthquakesInfo,
+        style: context.textTheme.subtitle1!.copyWith(fontWeight: context.fw700),
+        textAlign: context.taCenter,
       ),
     );
   }
@@ -79,6 +82,21 @@ class HomeView extends StatelessWidget with BaseSingleton {
         prefixIcon: icons.search,
         onChanged: pv.searchEarthquake,
         controller: _earthquakeController,
+      ),
+    );
+  }
+
+  Padding _sortByDateButton(BuildContext context, EarthquakesViewModel pv) {
+    bool isHasIcon = true;
+    return Padding(
+      padding: context.paddingHorizontal2x,
+      child: SpecialButton(
+        padding: context.padding2x,
+        borderRadius: context.borderRadius4x,
+        buttonLabel: AppLocalizations.of(context)!.sortByDate,
+        isHasIcon: isHasIcon,
+        icon: Icons.date_range_rounded,
+        onTap: () => pv.sortByDate,
       ),
     );
   }

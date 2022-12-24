@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'core/base/base_singleton.dart';
-import 'products/views/home_view.dart';
 import 'products/views/splash_view.dart';
 import 'package:provider/provider.dart';
-
 import 'core/constants/app_constants.dart';
 
 // TODO: Learn dart export

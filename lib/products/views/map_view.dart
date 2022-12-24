@@ -55,9 +55,8 @@ class EarthquakeMapViewState extends State<EarthquakeMapView> {
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: _cameraPosition,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+        onMapCreated: (GoogleMapController controller) =>
+            _controller.complete(controller),
       ),
     );
   }

@@ -18,24 +18,28 @@ class SplashView extends StatelessWidget with BaseSingleton {
         builder: ((context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(
-                child: ListView(
-                  physics: context.neverScroll,
-                  shrinkWrap: true,
-                  children: [
-                    Center(
-                      child: Text(
-                        constants.appTitle,
-                        style: context.textTheme.headline6,
-                      ),
-                    )
-                  ],
-                ),
-              );
+              return _splashBody(context);
             default:
               return HomeView();
           }
         }),
+      ),
+    );
+  }
+
+  Center _splashBody(BuildContext context) {
+    return Center(
+      child: ListView(
+        physics: context.neverScroll,
+        shrinkWrap: true,
+        children: [
+          Center(
+            child: Text(
+              constants.appTitle,
+              style: context.textTheme.headline6,
+            ),
+          )
+        ],
       ),
     );
   }
