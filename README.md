@@ -1,16 +1,16 @@
-# kandilli_rasathanesi_app
+## 📱 Kandilli Observatory Mobile Application
 
-A new Flutter project.
+### 🔎 Preview
+Coming soon!
 
-## Getting Started
+### 📁 Description
+I developed [Kandilli Observatory](https://en.wikipedia.org/wiki/Kandilli_Observatory) mobile application in Flutter. With this application, you can follow earthquakes in Turkey and find out the location of the earthquake thanks to google maps.
 
-This project is a starting point for a Flutter application.
+### 📶 API
+In this application, I used the api written for the Kandilli Observatory. You can read and reach back-end part [here.](https://github.com/orhanayd/kandilli-rasathanesi-api)
 
-A few resources to get you started if this is your first Flutter project:
+### 🧑🏻‍💻 Coding
+I tried to write the code of this project as clean as possible. I used provider state-management and used MVVM as the software architecture model. In terms of folders, the project proceeds through four main folders. The core folder contains structures such as extensions, singleton classes, base classes, network and token layers, theme operations and validators that I use in every project. The features folder is the part where the atomic widgets or components I have prepared specifically for this project or my managers are located. The products folder is the part where each screen is separated according to the MVMM software architecture model, and the design and API integration is done. Finally the uikit folder is ready-made design components that I use in every project. For example button, textfield, alert, skeleton list etc.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### ‼️ Alert
+No commercial purpose was pursued in this project.
