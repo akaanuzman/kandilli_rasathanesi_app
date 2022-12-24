@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+
 import '../../core/theme/color/my_colors.dart';
 
 class SkeletonItem extends AspectRatio {

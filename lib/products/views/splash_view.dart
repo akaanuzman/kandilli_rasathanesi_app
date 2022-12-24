@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
-import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
-import 'package:kandilli_rasathanesi_app/products/views/home_view.dart';
+import '../../core/base/base_singleton.dart';
+import '../../core/extensions/ui_extensions.dart';
+import 'home_view.dart';
 import 'package:provider/provider.dart';
 
 import '../viewmodels/earthquakes_view_model.dart';

@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+
 import '../../core/base/base_singleton.dart';
 import '../decoration/special_container_decoration.dart';
 import 'skeleton_item.dart';

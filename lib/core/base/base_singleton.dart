@@ -1,7 +1,6 @@
 
 import '../constants/app_constants.dart';
 import '../constants/icon_constants.dart';
-
 import '../helpers/globals.dart';
 import '../helpers/ui_globals.dart';
 import '../theme/color/my_colors.dart';

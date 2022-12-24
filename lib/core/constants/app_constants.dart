@@ -1,8 +1,9 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+
 import '../../products/viewmodels/earthquakes_view_model.dart';
 import '../utils/navigation_service.dart';
-import 'package:provider/provider.dart';
 
 class AppConstants {
   static AppConstants? _instance;

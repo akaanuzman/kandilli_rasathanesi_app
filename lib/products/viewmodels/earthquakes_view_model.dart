@@ -16,12 +16,12 @@ class EarthquakesViewModel extends ChangeNotifier {
   final _api = Api();
 
   Future<void> getLatestEarthquakes({
-    int latestEarthquakesCount = 100,
+    int latestEarthquakesCount = 500,
     String? date,
   }) async {
     String url = date == null
         ? "/live.php?limit=$latestEarthquakesCount"
-        : "/index.php?date=$date&limit=200";
+        : "/index.php?date=$date&limit=$latestEarthquakesCount";
     final result = await _api.dioGet(url: url);
 
     if (result?.statusCode == HttpStatus.ok) {
@@ -34,11 +34,12 @@ class EarthquakesViewModel extends ChangeNotifier {
         if (date != null) {
           _earthquakes.sort(
             ((a, b) {
-              if (a.dateStamp != null && b.dateStamp != null) {
+              if (a.dateStamp != null && b.dateStamp != null) {      
                 return b.dateStamp!.compareTo(a.dateStamp!);
               } else {
                 DateTime now = DateTime.now();
-                return a.dateStamp?.compareTo(b.dateStamp ?? "") ?? 0;
+                String nowString = now.toString().substring(0,10);
+                return b.dateStamp?.compareTo(a.dateStamp ?? nowString) ?? 1;
               }
             }),
           );

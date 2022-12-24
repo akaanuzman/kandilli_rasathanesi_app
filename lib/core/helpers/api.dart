@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
 import '../base/base_singleton.dart';
 import '../utils/navigation_service.dart';
 

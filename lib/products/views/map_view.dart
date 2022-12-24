@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:kandilli_rasathanesi_app/products/models/earthquake_model.dart';
+import '../models/earthquake_model.dart';
 
 class EarthquakeMapView extends StatefulWidget {
   final EarthquakeModel model;

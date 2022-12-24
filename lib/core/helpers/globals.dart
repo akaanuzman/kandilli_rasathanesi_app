@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+
 import '../base/base_singleton.dart';
 
 class Globals with BaseSingleton {
