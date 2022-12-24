@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
-import 'package:kandilli_rasathanesi_app/products/views/home_view.dart';
+import 'core/base/base_singleton.dart';
+import 'products/views/splash_view.dart';
 import 'package:provider/provider.dart';
-
 import 'core/constants/app_constants.dart';
 
 // TODO: Learn dart export
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
       localizationsDelegates: constants.localizationsDelegates,
       supportedLocales: constants.supportedLocales,
       navigatorKey: constants.navigatorKey,
-      home: HomeView(),
+      home: const SplashView(),
     );
   }
 }

@@ -1,12 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kandilli_rasathanesi_app/core/base/base_singleton.dart';
-import 'package:kandilli_rasathanesi_app/core/extensions/ui_extensions.dart';
-import 'package:kandilli_rasathanesi_app/products/views/map_view.dart';
-import 'package:kandilli_rasathanesi_app/uikit/decoration/special_container_decoration.dart';
-import 'package:kandilli_rasathanesi_app/uikit/skeleton/skeleton_list.dart';
-import 'package:kandilli_rasathanesi_app/uikit/textformfield/default_text_form_field.dart';
+import '../../core/base/base_singleton.dart';
+import '../../core/extensions/ui_extensions.dart';
+import 'map_view.dart';
+import '../../uikit/button/special_button.dart';
+import '../../uikit/decoration/special_container_decoration.dart';
+import '../../uikit/textformfield/default_text_form_field.dart';
 import 'package:provider/provider.dart';
 
 import '../models/earthquake_model.dart';
@@ -28,38 +28,41 @@ class HomeView extends StatelessWidget with BaseSingleton {
 
   @override
   Widget build(BuildContext context) {
-    final pv = Provider.of<EarthquakesViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: _appBarTitle(context),
       ),
       body: FadeInRight(
-        child: _initPage(pv),
+        child: Consumer<EarthquakesViewModel>(
+          builder: (context, pv, _) {
+            return ListView(
+              children: [
+                context.emptySizedHeightBox3x,
+                _earthquakeInfo(context),
+                context.emptySizedHeightBox3x,
+                _searchEarthquakeField(context, pv),
+                context.emptySizedHeightBox3x,
+                _sortByDateButton(context, pv),
+                context.emptySizedHeightBox3x,
+                _earthquakeList(context, pv),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
 
-  FutureBuilder<void> _initPage(EarthquakesViewModel pv) {
-    return FutureBuilder(
-      future: pv.getLatestEarthquakes(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return SkeletonList();
-          default:
-            return Consumer<EarthquakesViewModel>(
-              builder: (context, pv, _) {
-                return ListView(
-                  children: [
-                    _searchEarthquakeField(context, pv),
-                    context.emptySizedHeightBox2x,
-                    _earthquakeList(context, pv),
-                  ],
-                );
-              },
-            );
-        }
-      },
+  Container _earthquakeInfo(BuildContext context) {
+    return Container(
+      decoration: SpecialContainerDecoration(context: context),
+      padding: context.padding2x,
+      margin: context.paddingHorizontal2x,
+      child: Text(
+        AppLocalizations.of(context)!.earthquakesInfo,
+        style: context.textTheme.subtitle1!.copyWith(fontWeight: context.fw700),
+        textAlign: context.taCenter,
+      ),
     );
   }
 
@@ -72,13 +75,28 @@ class HomeView extends StatelessWidget with BaseSingleton {
   Padding _searchEarthquakeField(
       BuildContext context, EarthquakesViewModel pv) {
     return Padding(
-      padding: context.padding2x,
+      padding: context.paddingHorizontal2x,
       child: DefaultTextFormField(
         context: context,
         labelText: AppLocalizations.of(context)!.searchEarthQuake,
         prefixIcon: icons.search,
         onChanged: pv.searchEarthquake,
         controller: _earthquakeController,
+      ),
+    );
+  }
+
+  Padding _sortByDateButton(BuildContext context, EarthquakesViewModel pv) {
+    bool isHasIcon = true;
+    return Padding(
+      padding: context.paddingHorizontal2x,
+      child: SpecialButton(
+        padding: context.padding2x,
+        borderRadius: context.borderRadius4x,
+        buttonLabel: AppLocalizations.of(context)!.sortByDate,
+        isHasIcon: isHasIcon,
+        icon: Icons.date_range_rounded,
+        onTap: () => pv.sortByDate,
       ),
     );
   }

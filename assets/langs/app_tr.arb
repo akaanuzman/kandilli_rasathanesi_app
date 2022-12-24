@@ -1,4 +1,6 @@
 {
     "lastEarthquakes": "SON DEPREMLER",
-    "searchEarthQuake": "Deprem Ara"
+    "earthquakesInfo": "Varsayılan olarak son 500 deprem listelenmektedir.",
+    "searchEarthQuake": "Deprem Ara",
+    "sortByDate": "Tarihe göre sırala"
 }
