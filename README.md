@@ -1,7 +1,7 @@
 ## 📱 Kandilli Observatory Mobile Application
 
 ### 🔎 Preview
-Coming soon!
+https://user-images.githubusercontent.com/55639112/209525161-385f00fe-d106-4067-8fed-1b3df22fc1f0.mov
 
 ### 📁 Description
 I developed [Kandilli Observatory](https://en.wikipedia.org/wiki/Kandilli_Observatory) mobile application in Flutter. With this application, you can follow earthquakes in Turkey and find out the location of the earthquake thanks to google maps.
